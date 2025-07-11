@@ -1,0 +1,28 @@
+.navbar {
+    justify-content: space-between;
+    padding: 0 30px;
+    border-bottom: 1px solid #e6e6e6;    
+}
+
+.navbar > h1 {
+    font-size: 30px;
+    color: #ffe400;
+}
+
+.navbar_links {
+
+}
+
+.navbar_links > a {
+    font-size: 20px;
+    font-weight: 500;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0 15px;
+}
+
+.navbar_emoji {
+    width: 25px;
+    height: 25px;
+    margin-left: 10px;
+}
