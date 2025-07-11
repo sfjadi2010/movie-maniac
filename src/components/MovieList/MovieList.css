@@ -42,3 +42,38 @@
     padding: 0 30px;
 }
 
+.movie_pagination {
+    margin: 30px;
+    gap: 20px;
+    justify-content: right;
+}
+
+.movie_pagination_btn {
+    background-color: #ffe400;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.movie_pagination_btn:hover:not(:disabled) {
+    background-color: #e6cc00;
+}
+
+.movie_pagination_btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.movie_pagination_info {
+    font-size: 16px;
+    font-weight: 500;
+    color: #e6e6e6;
+    align-self: center;
+}
+

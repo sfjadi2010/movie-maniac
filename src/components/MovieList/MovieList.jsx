@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./MovieList.css";
 import Fire from "../../assets/fire.png";
 import Start from "../../assets/glowing-star.png";
@@ -7,21 +7,35 @@ import MovieCard from "./MovieCard";
 
 const MovieList = () => {
   const [movies, setMovies] = useState([]);
-  const [pages, setPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
-    // Fetch movies data here
-    fetchMovies();
-  }, []);
-
-  const fetchMovies = async () => {
+  const fetchMovies = useCallback(async () => {
     const response = await fetch(
       `https://api.themoviedb.org/3/movie/popular?api_key=3a0b2acf5787dec8795880fdae9ed3fa&language=en-US&page=${currentPage}`
     );
     const data = await response.json();
 
+    // Limit to 24 movies maximum
     setMovies(data.results);
+    setTotalPages(data.total_pages);
+  }, [currentPage]);
+
+  useEffect(() => {
+    // Fetch movies data here
+    fetchMovies();
+  }, [fetchMovies]);
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
   };
 
   return (
@@ -55,6 +69,28 @@ const MovieList = () => {
         {movies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
+      </div>
+
+      <div className="align_center movie_pagination">
+        <button
+          className="movie_pagination_btn"
+          onClick={handlePreviousPage}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+
+        <span className="movie_pagination_info">
+          Page {currentPage} of {totalPages}
+        </span>
+
+        <button
+          className="movie_pagination_btn"
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
       </div>
     </section>
   );
