@@ -2,13 +2,11 @@ import React, { useEffect, useState, useCallback } from "react";
 import _ from "lodash";
 
 import "./MovieList.css";
-import Fire from "../../assets/fire.png";
-import Start from "../../assets/glowing-star.png";
-import Party from "../../assets/partying-face.png";
+
 import MovieCard from "./MovieCard";
 import FilterGroup from "./FilterGroup";
 
-const MovieList = () => {
+const MovieList = ({type, title, emoji}) => {
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [minRating, setMinRating] = useState(0);
@@ -18,7 +16,7 @@ const MovieList = () => {
 
   const fetchMovies = useCallback(async () => {
     const response = await fetch(
-      `https://api.themoviedb.org/3/movie/popular?api_key=3a0b2acf5787dec8795880fdae9ed3fa&language=en-US&page=${currentPage}`
+      `https://api.themoviedb.org/3/movie/${type}?api_key=3a0b2acf5787dec8795880fdae9ed3fa&language=en-US&page=${currentPage}`
     );
     const data = await response.json();
 
@@ -76,10 +74,10 @@ const MovieList = () => {
   };
 
   return (
-    <section className="movie_list">
+    <section className="movie_list" id={type}>
       <header className="align_center movie_list_header">
         <h2 className="align_center movie_list_heading">
-          Popular <img src={Fire} alt="Popular" className="navbar_emoji" />
+          {title} <img src={emoji} alt={`${emoji} icon`} className="navbar_emoji" />
         </h2>
 
         <div className="align_center">

@@ -11,9 +11,9 @@ const Navbar = () => {
       <nav className="navbar align_center">
         <h1>MovieManiac</h1>
         <div className="navbar_links align_center">
-            <a href="">Popular <img src={Fire} alt="Popular" className="navbar_emoji"/></a>
-            <a href="">Top Rated <img src={Start} alt="Top Rated" className="navbar_emoji" /></a>
-            <a href="">Upcoming <img src={Party} alt="Upcoming" className="navbar_emoji" /></a>
+            <a href="#popular">Popular <img src={Fire} alt="Popular" className="navbar_emoji"/></a>
+            <a href="#top_rated">Top Rated <img src={Start} alt="Top Rated" className="navbar_emoji" /></a>
+            <a href="#upcoming">Upcoming <img src={Party} alt="Upcoming" className="navbar_emoji" /></a>
         </div>
       </nav>
     </>

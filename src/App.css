@@ -1,4 +1,15 @@
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px; /* Add padding to account for fixed navbar when scrolling to sections */
+}
+
 .app {
-  display: grid;
-  grid-template-rows: 80px auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  margin-top: 80px; /* Add margin to account for fixed navbar height */
+  flex: 1;
 }
