@@ -33,12 +33,21 @@ const MovieList = () => {
     fetchMovies();
   }, [fetchMovies]);
 
+  const applySorting = useCallback(
+    (moviesToSort) => {
+      if (sort.by === "default") {
+        return moviesToSort;
+      }
+      return _.orderBy(moviesToSort, [sort.by], [sort.order]);
+    },
+    [sort]
+  );
+
   useEffect(() => {
-    if (sort.by !== "default") {
-      const sortedMovies = _.orderBy(filteredMovies, [sort.by], [sort.order]);
-      setFilteredMovies(sortedMovies);
-    }
-  }, [sort, filteredMovies]);
+    const filtered = movies.filter((movie) => movie.vote_average >= minRating);
+    const sortedAndFiltered = applySorting(filtered);
+    setFilteredMovies(sortedAndFiltered);
+  }, [movies, minRating, applySorting]);
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
@@ -55,16 +64,10 @@ const MovieList = () => {
   const handleFilter = (rating) => {
     if (rating === minRating) {
       // If the same rating is clicked, reset to show all movies
-      setFilteredMovies(movies);
       setMinRating(0);
-      return;
+    } else {
+      setMinRating(rating);
     }
-
-    setMinRating(rating);
-    const filteredMovies = movies.filter(
-      (movie) => movie.vote_average >= rating
-    );
-    setFilteredMovies(filteredMovies);
   };
 
   const handleSort = (e) => {
