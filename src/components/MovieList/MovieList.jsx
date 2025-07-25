@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
+import _ from "lodash";
+
 import "./MovieList.css";
 import Fire from "../../assets/fire.png";
 import Start from "../../assets/glowing-star.png";
@@ -30,6 +32,13 @@ const MovieList = () => {
     // Fetch movies data here
     fetchMovies();
   }, [fetchMovies]);
+
+  useEffect(() => {
+    if (sort.by !== "default") {
+      const sortedMovies = _.orderBy(filteredMovies, [sort.by], [sort.order]);
+      setFilteredMovies(sortedMovies);
+    }
+  }, [sort, filteredMovies]);
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
