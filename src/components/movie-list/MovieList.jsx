@@ -6,7 +6,7 @@ import "./MovieList.css";
 import MovieCard from "./MovieCard";
 import FilterGroup from "./FilterGroup";
 
-const MovieList = ({type, title, emoji}) => {
+const MovieList = ({ type, title, emoji }) => {
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [minRating, setMinRating] = useState(0);
@@ -24,12 +24,18 @@ const MovieList = ({type, title, emoji}) => {
     setMovies(data.results);
     setFilteredMovies(data.results);
     setTotalPages(data.total_pages);
-  }, [currentPage]);
+  }, [currentPage, type]);
 
   useEffect(() => {
     // Fetch movies data here
     fetchMovies();
   }, [fetchMovies]);
+
+  useEffect(() => {
+    // Reset to page 1 when movie type changes
+    setCurrentPage(1);
+    setMinRating(0); // Also reset filters when type changes
+  }, [type]);
 
   const applySorting = useCallback(
     (moviesToSort) => {
@@ -73,11 +79,13 @@ const MovieList = ({type, title, emoji}) => {
     setSort((prevSort) => ({ ...prevSort, [name]: value }));
   };
 
+  console.log({ type, title, emoji });
   return (
     <section className="movie_list" id={type}>
       <header className="align_center movie_list_header">
         <h2 className="align_center movie_list_heading">
-          {title} <img src={emoji} alt={`${emoji} icon`} className="navbar_emoji" />
+          {title}{" "}
+          <img src={emoji} alt={`${emoji} icon`} className="navbar_emoji" />
         </h2>
 
         <div className="align_center">

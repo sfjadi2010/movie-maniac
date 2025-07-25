@@ -1,9 +1,11 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
+
 import "./Navbar.css";
 import { useTheme } from "../../contexts/ThemeContext.jsx";
 
 import Fire from "../../assets/fire.png";
-import Start from "../../assets/glowing-star.png";
+import Star from "../../assets/glowing-star.png";
 import Party from "../../assets/partying-face.png";
 
 const Navbar = () => {
@@ -14,16 +16,9 @@ const Navbar = () => {
       <nav className="navbar align_center">
         <h1>MovieManiac</h1>
         <div className="navbar_links align_center">
-          <a href="#popular">
-            Popular <img src={Fire} alt="Popular" className="navbar_emoji" />
-          </a>
-          <a href="#top_rated">
-            Top Rated{" "}
-            <img src={Start} alt="Top Rated" className="navbar_emoji" />
-          </a>
-          <a href="#upcoming">
-            Upcoming <img src={Party} alt="Upcoming" className="navbar_emoji" />
-          </a>
+          <NavLink to="/movies?type=popular&title=Popular Movies&emoji=fire">Popular <img src={Fire} alt="Popular" className="navbar_emoji" /></NavLink>
+          <NavLink to="/movies?type=top_rated&title=Top Rated Movies&emoji=star">Top Rated <img src={Star} alt="Top Rated" className="navbar_emoji" /></NavLink>
+          <NavLink to="/movies?type=upcoming&title=Upcoming Movies&emoji=party">Upcoming <img src={Party} alt="Upcoming" className="navbar_emoji" /></NavLink>
 
           <div className="theme_toggle_container">
             <label className="theme_slider">
