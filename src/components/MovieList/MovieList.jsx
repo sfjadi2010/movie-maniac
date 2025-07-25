@@ -4,11 +4,15 @@ import Fire from "../../assets/fire.png";
 import Start from "../../assets/glowing-star.png";
 import Party from "../../assets/partying-face.png";
 import MovieCard from "./MovieCard";
+import FilterGroup from "./FilterGroup";
 
 const MovieList = () => {
   const [movies, setMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [minRating, setMinRating] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [sort, setSort] = useState({ by: "default", order: "asc" }); // Default sort by date
 
   const fetchMovies = useCallback(async () => {
     const response = await fetch(
@@ -18,6 +22,7 @@ const MovieList = () => {
 
     // Limit to 24 movies maximum
     setMovies(data.results);
+    setFilteredMovies(data.results);
     setTotalPages(data.total_pages);
   }, [currentPage]);
 
@@ -38,6 +43,26 @@ const MovieList = () => {
     }
   };
 
+  const handleFilter = (rating) => {
+    if (rating === minRating) {
+      // If the same rating is clicked, reset to show all movies
+      setFilteredMovies(movies);
+      setMinRating(0);
+      return;
+    }
+
+    setMinRating(rating);
+    const filteredMovies = movies.filter(
+      (movie) => movie.vote_average >= rating
+    );
+    setFilteredMovies(filteredMovies);
+  };
+
+  const handleSort = (e) => {
+    const { name, value } = e.target;
+    setSort((prevSort) => ({ ...prevSort, [name]: value }));
+  };
+
   return (
     <section className="movie_list">
       <header className="align_center movie_list_header">
@@ -46,27 +71,39 @@ const MovieList = () => {
         </h2>
 
         <div className="align_center">
-          <ul className="align_center movie_filter">
-            <li className="movie_filter_item active">8+ Star</li>
-            <li className="movie_filter_item">7+ Start</li>
-            <li className="movie_filter_item">6+ Star</li>
-          </ul>
+          <FilterGroup
+            minRating={minRating}
+            handleFilter={handleFilter}
+            ratings={[8, 7, 6, 5]}
+          />
 
-          <select name="" id="" className="movie_sorting">
-            <option value="">SortBy</option>
-            <option value="">Date</option>
-            <option value="">Rating</option>
+          <select
+            name="by"
+            id=""
+            className="movie_sorting"
+            onChange={handleSort}
+            value={sort.by}
+          >
+            <option value="default">SortBy</option>
+            <option value="release_date">Date</option>
+            <option value="vote_average">Rating</option>
           </select>
 
-          <select name="" id="" className="movie_sorting">
-            <option value="">Ascending</option>
-            <option value="">Descending</option>
+          <select
+            name="order"
+            id=""
+            className="movie_sorting"
+            onChange={handleSort}
+            value={sort.order}
+          >
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
           </select>
         </div>
       </header>
 
       <div className="align_center movie_cards">
-        {movies.map((movie) => (
+        {filteredMovies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>

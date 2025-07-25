@@ -17,10 +17,14 @@
 .movie_filter_item {
     padding: 5px 10px;
     cursor: pointer;
+    margin: 2px;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;    
 }
 
 .movie_filter_item.active {
-    border-bottom: 1px solid #e6e6e6;
+    background-color: #e6e6e6;
+    color: black;
     font-weight: 500;
 }
 
