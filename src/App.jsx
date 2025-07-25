@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import { ThemeProvider } from "./contexts/ThemeContext.jsx";
 import Navbar from "./components/navbar/Navbar";
 import MovieList from "./components/MovieList/MovieList";
 import Fire from "./assets/fire.png";
@@ -8,7 +9,7 @@ import Party from "./assets/partying-face.png";
 
 const App = () => {
   return (
-    <>
+    <ThemeProvider>
       <div className="app">
         <Navbar />
         <main className="main-content">
@@ -17,7 +18,7 @@ const App = () => {
           <MovieList type="upcoming" title="Upcoming Movies" emoji={Party} />
         </main>
       </div>
-    </>
+    </ThemeProvider>
   );
 };
 

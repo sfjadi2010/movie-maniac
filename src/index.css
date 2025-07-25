@@ -2,21 +2,47 @@
   font-family: "Montserrat";
   src: url("./assets/fonts/Montserrat.woff2");
 }
+
+:root {
+  /* Dark theme (default) */
+  --bg-primary: #101010;
+  --bg-secondary: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-secondary: #e6e6e6;
+  --accent-color: #ffe400;
+  --border-color: #e6e6e6;
+  --card-bg: #1f1f1f;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] {
+  /* Light theme */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text-primary: #212529;
+  --text-secondary: #495057;
+  --accent-color: #ffc107;
+  --border-color: #dee2e6;
+  --card-bg: #ffffff;
+  --shadow: rgba(0, 0, 0, 0.15);
+}
+
 * {
   margin: 0;
   padding: 0;
-  block-size: border-box;
+  box-sizing: border-box;
 }
 
 body {
-  background-color: #101010;
-  color: #ffffff;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   font-family: "Montserrat", sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .align_center {
   display: flex;
-    align-items: center;
+  align-items: center;
 }
 
 html {
